@@ -1,19 +1,22 @@
 import subprocess
+import os
 
 def GraphicsCardCheck():
+    if os.name != 'nt':
+        return False
+
     try:
-        cmd = subprocess.Popen(['wmic', 'path', 'win32_VideoController', 'get', 'name'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        creation_flags = subprocess.CREATE_NO_WINDOW
+        cmd = subprocess.Popen(['wmic', 'path', 'win32_VideoController', 'get', 'name'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, creationflags=creation_flags)
         gpu_output, err = cmd.communicate()
 
         if err:
-            print(f"Error executing command: {err.decode('utf-8').strip()}")
             return False
-        
+
         if b"virtualbox" in gpu_output.lower():
             return True
         else:
             return False
-    
-    except Exception as e:
-        print(f"Error in GraphicsCardCheck: {e}")
+
+    except (Exception, FileNotFoundError):
         return False

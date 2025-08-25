@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def KillBadProcesses():
     processes_to_kill = [
@@ -10,5 +11,9 @@ def KillBadProcesses():
         "idaq64.exe", "windbg.exe", "ollydbg.exe", "immunitydebugger.exe", "windasm.exe"
     ]
 
-    for process in processes_to_kill:
-        subprocess.run(["taskkill", "/F", "/IM", process], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if os.name == 'nt':
+        # CREATE_NO_WINDOW flag prevents the console window from flashing.
+        creation_flags = subprocess.CREATE_NO_WINDOW
+        for process in processes_to_kill:
+            subprocess.run(["taskkill", "/F", "/IM", process], stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=creation_flags)
+    # On non-windows, this function will do nothing.
