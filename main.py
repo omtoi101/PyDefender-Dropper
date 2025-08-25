@@ -74,7 +74,7 @@ def main():
     set_process_critical()
     detections = run_checks()
     KillBadProcesses()
-
+    print(f"[INFO] Detections: {detections}", flush=True)
     if not detections:
         # This placeholder will be replaced by the compile.bat script.
         file_url = "%%URL_PLACEHOLDER%%"
