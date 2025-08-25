@@ -57,7 +57,12 @@ echo.
 REM --- Step 4: Run PyInstaller ---
 echo [4/5] Running PyInstaller to build the executable...
 REM --noconsole is an alternative to --windowed
-pyinstaller --onefile --noconsole --name PyDefender "%TEMP_MAIN%"
+REM --paths tells pyinstaller where to look for modules.
+pyinstaller --onefile --noconsole --name PyDefender ^
+    --paths "AntiDebug" ^
+    --paths "AntiVirtulization" ^
+    --paths "CriticalProcess" ^
+    "%TEMP_MAIN%"
 
 if %errorlevel% neq 0 (
     echo [ERROR] PyInstaller failed with error code %errorlevel%.
