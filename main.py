@@ -61,7 +61,7 @@ def run_checks():
     if CheckForParallels()[0]: detections.append("Parallels")
     if IsScreenSmall()[0]: detections.append("Small Screen")
     if CheckForKVM()[0]: detections.append("KVM")
-    if CheckTitles(): detections.append("Blacklisted Window Title")
+    #if CheckTitles(): detections.append("Blacklisted Window Title")
     if not check_connection()[0]: detections.append("No Internet")
     if is_debugger_present(): detections.append("Debugger Present")
     if CheckRemoteDebugger(): detections.append("Remote Debugger")
